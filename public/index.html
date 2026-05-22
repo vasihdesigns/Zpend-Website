@@ -71,9 +71,13 @@
     .nav-dl:hover { background: #2a2a40 !important; }
 
     /* ── HERO ── */
-    .hero { padding: 120px 28px 80px; }
+    .hero {
+      min-height: 100vh;
+      padding: 0 28px;
+      display: flex; align-items: center;
+    }
     .hero-inner {
-      max-width: var(--max); margin: 0 auto;
+      max-width: var(--max); margin: 0 auto; width: 100%;
       display: grid; grid-template-columns: 1fr auto;
       align-items: center; gap: 72px;
     }
@@ -286,7 +290,7 @@
     }
     @media (max-width: 600px) {
       .section { padding: 80px 20px; }
-      .hero { padding: 100px 20px 60px; }
+      .hero { padding: 0 20px; min-height: 100vh; }
       .slides-section { padding: 80px 20px; }
       .why-grid { grid-template-columns: 1fr; }
       .slides-row { grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -382,7 +386,7 @@
 
   <!-- FEATURES -->
   <!-- 1. Voice — white -->
-  <section class="section" id="features" style="background:#ffffff">
+  <section class="section" id="features" style="background:#F7F7FB">
     <div class="section-inner">
       <div class="feat reveal">
         <div>
@@ -423,8 +427,8 @@
     </div>
   </section>
 
-  <!-- 2. Categories — light grey -->
-  <section class="section" style="background:#F7F7FB">
+  <!-- 2. Categories — white -->
+  <section class="section" style="background:#ffffff">
     <div class="section-inner">
       <div class="feat flip reveal">
         <div>
@@ -465,8 +469,8 @@
     </div>
   </section>
 
-  <!-- 3. Insights — white -->
-  <section class="section" style="background:#ffffff">
+  <!-- 3. Insights — light grey -->
+  <section class="section" style="background:#F7F7FB">
     <div class="section-inner">
       <div class="feat reveal">
         <div>
@@ -507,8 +511,8 @@
     </div>
   </section>
 
-  <!-- 4. Budgets — light grey -->
-  <section class="section" style="background:#F7F7FB">
+  <!-- 4. Budgets — white -->
+  <section class="section" style="background:#ffffff">
     <div class="section-inner">
       <div class="feat flip reveal">
         <div>
@@ -549,8 +553,8 @@
     </div>
   </section>
 
-  <!-- 5. Recurring — white -->
-  <section class="section" style="background:#ffffff">
+  <!-- 5. Recurring — light grey -->
+  <section class="section" style="background:#F7F7FB">
     <div class="section-inner">
       <div class="feat reveal">
         <div>
