@@ -9,114 +9,192 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue: #3B83F5;
-      --gray-100: #F3F4F6;
-      --gray-500: #6B7280;
-      --gray-700: #374151;
-      --gray-900: #111827;
-      --white: #FFFFFF;
+      --blue:      #3B83F5;
+      --ink:       #09090B;
+      --ink-2:     #18181B;
+      --muted:     #71717A;
+      --border:    #E4E4E7;
+      --white:     #FFFFFF;
+      --max:       1100px;
     }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-      color: var(--gray-700);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", sans-serif;
       background: var(--white);
-      line-height: 1.7;
+      color: var(--ink);
       -webkit-font-smoothing: antialiased;
     }
 
-    nav {
+    .nav {
       position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--gray-100);
-      padding: 0 24px;
-      height: 64px;
+      top: 0; z-index: 200;
+      height: 62px;
       display: flex;
       align-items: center;
+      padding: 0 32px;
+      background: rgba(9,9,11,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
+      color: var(--white);
       text-decoration: none;
-      color: var(--gray-900);
     }
 
-    .nav-logo img { width: 32px; height: 32px; border-radius: 8px; }
-    .nav-logo span { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-logo span { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
 
-    .content {
-      max-width: 700px;
+    .nav-back {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--white); }
+
+    .page-wrap {
+      max-width: 720px;
       margin: 0 auto;
-      padding: 64px 24px 100px;
+      padding: 72px 24px 120px;
     }
 
-    .content h1 {
-      font-size: 36px;
+    .page-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .page-wrap h1 {
+      font-size: clamp(36px, 5vw, 56px);
       font-weight: 800;
-      letter-spacing: -1px;
-      color: var(--gray-900);
-      margin-bottom: 8px;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 12px;
     }
 
     .updated {
       font-size: 14px;
-      color: var(--gray-500);
-      margin-bottom: 48px;
+      color: var(--muted);
+      margin-bottom: 56px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .content h2 {
-      font-size: 20px;
+    .page-wrap h2 {
+      font-size: 22px;
       font-weight: 700;
-      color: var(--gray-900);
-      margin: 40px 0 12px;
+      letter-spacing: -0.4px;
+      color: var(--ink);
+      margin: 48px 0 12px;
     }
 
-    .content p { font-size: 15px; margin-bottom: 16px; }
-    .content ul { padding-left: 20px; margin-bottom: 16px; }
-    .content ul li { font-size: 15px; margin-bottom: 8px; }
+    .page-wrap p {
+      font-size: 16px;
+      color: #3F3F46;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .page-wrap ul { padding-left: 20px; margin-bottom: 16px; }
+
+    .page-wrap ul li {
+      font-size: 16px;
+      color: #3F3F46;
+      line-height: 1.75;
+      margin-bottom: 8px;
+    }
 
     a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     footer {
-      border-top: 1px solid var(--gray-100);
-      padding: 28px 24px;
-      text-align: center;
-      font-size: 13px;
-      color: var(--gray-500);
+      background: var(--ink-2);
+      padding: 40px 24px;
     }
 
-    footer a { color: var(--gray-500); margin: 0 12px; }
-    footer a:hover { color: var(--gray-900); }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .footer-logo img { width: 26px; height: 26px; border-radius: 6px; }
+    .footer-logo span { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.25); }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a class="nav-logo" href="/">
-      <img src="/logo.png" alt="Zpend logo" />
-      <span>Zpend</span>
-    </a>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="/">
+        <img src="/logo.png" alt="Zpend" />
+        <span>Zpend</span>
+      </a>
+      <a class="nav-back" href="/">← Back to home</a>
+    </div>
   </nav>
 
-  <div class="content">
+  <div class="page-wrap">
+    <span class="page-tag">Legal</span>
     <h1>Terms of Use</h1>
     <p class="updated">Last updated: May 22, 2026</p>
 
-    <p>By downloading or using the Zpend app ("App"), you agree to be bound by these Terms of Use. Please read them carefully.</p>
+    <p>By downloading or using the Zpend app ("App"), you agree to these Terms of Use. Please read them before using the App.</p>
 
     <h2>1. Use of the App</h2>
-    <p>Zpend is a personal expense tracking app for iOS. You may use the App for your own personal, non-commercial purposes. You agree not to:</p>
+    <p>Zpend is a personal expense tracking app for iOS. You may use it for personal, non-commercial purposes. You agree not to:</p>
     <ul>
       <li>Reverse engineer, decompile, or disassemble the App</li>
       <li>Use the App for any unlawful purpose</li>
-      <li>Attempt to gain unauthorized access to any part of the App</li>
+      <li>Attempt to gain unauthorized access to any component of the App</li>
+      <li>Remove or alter any proprietary notices or labels</li>
     </ul>
 
     <h2>2. Intellectual Property</h2>
@@ -126,10 +204,10 @@
     <p>Zpend is a personal tracking tool only. Nothing in the App constitutes financial, investment, tax, or legal advice. You are solely responsible for your financial decisions.</p>
 
     <h2>4. Disclaimer of Warranties</h2>
-    <p>The App is provided "as is" without warranties of any kind, express or implied. We do not guarantee that the App will be error-free, uninterrupted, or meet your specific requirements.</p>
+    <p>The App is provided "as is" without warranties of any kind, express or implied. We do not guarantee that the App will be error-free, uninterrupted, secure, or meet your specific requirements.</p>
 
     <h2>5. Limitation of Liability</h2>
-    <p>To the fullest extent permitted by law, Zpend shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the App, including loss of data.</p>
+    <p>To the fullest extent permitted by law, Zpend shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the App, including but not limited to loss of data or financial decisions made using the App.</p>
 
     <h2>6. Changes to the App or Terms</h2>
     <p>We reserve the right to modify or discontinue the App at any time without notice. We may also update these Terms — continued use of the App after changes constitutes your acceptance.</p>
@@ -138,14 +216,23 @@
     <p>These Terms are governed by the laws of the United States, without regard to conflict of law principles.</p>
 
     <h2>8. Contact</h2>
-    <p>Questions about these Terms? Reach us at <a href="mailto:support@zpend.app">support@zpend.app</a>.</p>
+    <p>Questions about these Terms? Reach us at <a href="mailto:support@zpend.app">support@zpend.app</a></p>
   </div>
 
   <footer>
-    <a href="/">Home</a>
-    <a href="/privacy.html">Privacy Policy</a>
-    <a href="/terms.html">Terms of Use</a>
-    <span style="display:block;margin-top:16px;">© 2026 Zpend. All rights reserved.</span>
+    <div class="footer-inner">
+      <a class="footer-logo" href="/">
+        <img src="/logo.png" alt="Zpend" />
+        <span>Zpend</span>
+      </a>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Use</a>
+        <a href="mailto:support@zpend.app">Contact</a>
+      </div>
+      <span class="footer-copy">© 2026 Zpend. All rights reserved.</span>
+    </div>
   </footer>
 
 </body>

@@ -3,167 +3,222 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zpend — Your Money, Under Control</title>
-  <meta name="description" content="Track expenses by voice or text. Smart categories, budgets, recurring bills, and insights. All in one place." />
-  <meta property="og:title" content="Zpend — Your Money, Under Control" />
-  <meta property="og:description" content="Just say '$12 for lunch' and it's logged. No typing needed." />
-  <meta property="og:image" content="https://zpend.app/og-image.png" />
+  <title>Zpend — Track Expenses by Voice</title>
+  <meta name="description" content="Just say '$12 for lunch' and it's logged. Zpend is a voice-first expense tracker for iPhone — smart categories, budgets, and monthly insights." />
+  <meta property="og:title" content="Zpend — Track Expenses by Voice" />
+  <meta property="og:description" content="Say it, track it. Voice-first expense tracking for iPhone." />
+  <meta property="og:image" content="https://zpend.app/og.png" />
   <link rel="icon" href="/logo.png" />
   <style>
+    /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue: #3B83F5;
-      --blue-dark: #2563EB;
-      --blue-light: #EFF6FF;
-      --gray-50: #F9FAFB;
-      --gray-100: #F3F4F6;
-      --gray-300: #D1D5DB;
-      --gray-500: #6B7280;
-      --gray-700: #374151;
-      --gray-900: #111827;
-      --white: #FFFFFF;
-      --radius: 16px;
-      --radius-sm: 10px;
+      --blue:       #3B83F5;
+      --blue-dark:  #1D5FCC;
+      --blue-glow:  rgba(59,131,245,0.25);
+      --ink:        #09090B;
+      --ink-2:      #18181B;
+      --ink-3:      #27272A;
+      --muted:      #71717A;
+      --muted-2:    #A1A1AA;
+      --border:     #E4E4E7;
+      --surface:    #FAFAFA;
+      --white:      #FFFFFF;
+      --r-phone:    44px;
+      --max:        1100px;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-      color: var(--gray-900);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", sans-serif;
       background: var(--white);
-      line-height: 1.6;
+      color: var(--ink);
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--gray-100);
-      padding: 0 24px;
-      height: 64px;
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .nav.scrolled {
+      background: rgba(9,9,11,0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      width: 100%;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      max-width: 100%;
     }
 
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--gray-900);
+      gap: 9px;
+      color: var(--white);
     }
 
     .nav-logo img {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
+      width: 28px; height: 28px;
+      border-radius: 7px;
     }
 
     .nav-logo span {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       letter-spacing: -0.3px;
     }
 
-    .nav-cta {
-      background: var(--gray-900);
-      color: var(--white);
-      border: none;
-      border-radius: 100px;
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
+    .nav-links {
+      display: flex;
       align-items: center;
-      gap: 6px;
-      transition: background 0.2s;
+      gap: 32px;
+      list-style: none;
     }
 
-    .nav-cta:hover { background: var(--gray-700); }
+    .nav-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
 
-    /* HERO */
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--blue);
+      color: var(--white) !important;
+      border-radius: 100px;
+      padding: 8px 18px;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--blue-dark) !important; }
+
+    /* ── Hero ── */
     .hero {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 100px 24px 80px;
-      text-align: center;
+      background: var(--ink);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
     }
+
+    .hero-bg-glow {
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(59,131,245,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: var(--max);
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 64px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text { max-width: 520px; }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: var(--blue-light);
-      color: var(--blue-dark);
+      gap: 7px;
+      background: rgba(59,131,245,0.15);
+      border: 1px solid rgba(59,131,245,0.35);
+      color: #93BBFD;
       border-radius: 100px;
-      padding: 6px 14px;
+      padding: 5px 14px 5px 10px;
       font-size: 13px;
       font-weight: 600;
       margin-bottom: 28px;
     }
 
-    .hero-badge span { font-size: 15px; }
+    .hero-badge-dot {
+      width: 7px; height: 7px;
+      background: var(--blue);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(59,131,245,0.7); }
+      50%       { box-shadow: 0 0 0 5px rgba(59,131,245,0); }
+    }
 
     .hero h1 {
-      font-size: clamp(40px, 7vw, 72px);
+      font-size: clamp(42px, 5.5vw, 72px);
       font-weight: 800;
-      letter-spacing: -2px;
-      line-height: 1.05;
-      margin-bottom: 24px;
-      color: var(--gray-900);
+      letter-spacing: -2.5px;
+      line-height: 1.04;
+      color: var(--white);
+      margin-bottom: 20px;
     }
 
-    .hero h1 em {
-      font-style: normal;
-      color: var(--blue);
-    }
+    .hero h1 .accent { color: var(--blue); }
 
     .hero p {
-      font-size: clamp(17px, 2vw, 20px);
-      color: var(--gray-500);
-      max-width: 480px;
-      margin: 0 auto 48px;
-      line-height: 1.7;
+      font-size: 18px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.65;
+      margin-bottom: 40px;
+      max-width: 420px;
     }
 
-    /* WAITLIST FORM */
-    .waitlist-form {
+    .hero-form {
       display: flex;
       gap: 10px;
-      max-width: 440px;
-      margin: 0 auto;
       flex-wrap: wrap;
-      justify-content: center;
     }
 
-    .waitlist-form input {
+    .hero-form input {
       flex: 1;
-      min-width: 220px;
-      padding: 14px 18px;
-      border: 1.5px solid var(--gray-300);
+      min-width: 200px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 100px;
+      padding: 14px 20px;
       font-size: 15px;
+      color: var(--white);
       outline: none;
-      transition: border-color 0.2s;
       font-family: inherit;
+      transition: border-color 0.2s;
     }
 
-    .waitlist-form input:focus {
-      border-color: var(--blue);
-    }
+    .hero-form input::placeholder { color: rgba(255,255,255,0.3); }
+    .hero-form input:focus { border-color: var(--blue); }
 
-    .waitlist-form button {
+    .hero-form button {
       background: var(--blue);
       color: var(--white);
       border: none;
@@ -173,358 +228,1339 @@
       font-weight: 600;
       cursor: pointer;
       font-family: inherit;
-      transition: background 0.2s, transform 0.1s;
       white-space: nowrap;
+      transition: background 0.2s, transform 0.1s;
     }
 
-    .waitlist-form button:hover { background: var(--blue-dark); }
-    .waitlist-form button:active { transform: scale(0.98); }
+    .hero-form button:hover { background: var(--blue-dark); }
+    .hero-form button:active { transform: scale(0.97); }
 
-    .waitlist-note {
+    .hero-note {
       margin-top: 14px;
       font-size: 13px;
-      color: var(--gray-500);
+      color: rgba(255,255,255,0.28);
     }
 
-    .success-msg {
+    .hero-success {
       display: none;
-      color: var(--blue-dark);
-      font-weight: 600;
+      color: #6EE7B7;
       font-size: 15px;
-      margin-top: 16px;
+      font-weight: 600;
+      margin-top: 20px;
     }
 
-    /* FEATURES */
-    .features {
-      background: var(--gray-50);
-      padding: 100px 24px;
+    /* ── Phone Mockup ── */
+    .phone-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .section-label {
-      text-align: center;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 16px;
+    .phone {
+      width: 260px;
+      height: 530px;
+      background: #1A1A1C;
+      border-radius: 52px;
+      border: 8px solid #2D2D2F;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 40px 80px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
+      animation: float 5s ease-in-out infinite;
     }
 
-    .section-title {
-      text-align: center;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 64px;
-      color: var(--gray-900);
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
     }
 
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
+    .phone-notch {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 96px; height: 30px;
+      background: #1A1A1C;
+      border-radius: 0 0 20px 20px;
+      z-index: 10;
     }
 
-    .feature-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 32px;
-      border: 1.5px solid var(--gray-100);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .feature-card:hover {
-      border-color: var(--blue);
-      transform: translateY(-2px);
-    }
-
-    .feature-icon {
-      font-size: 32px;
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    .feature-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      margin-bottom: 8px;
-      color: var(--gray-900);
-    }
-
-    .feature-card p {
-      font-size: 14px;
-      color: var(--gray-500);
-      line-height: 1.6;
-    }
-
-    /* HOW IT WORKS */
-    .how {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 100px 24px;
-      text-align: center;
-    }
-
-    .steps {
+    .phone-screen {
+      width: 100%; height: 100%;
+      background: #F2F2F7;
+      border-radius: 44px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 32px;
-      margin-top: 56px;
-      text-align: left;
     }
 
-    .step {
+    /* App status bar */
+    .app-statusbar {
+      height: 44px;
+      background: var(--white);
       display: flex;
-      gap: 20px;
-      align-items: flex-start;
+      align-items: flex-end;
+      padding: 0 16px 8px;
+      justify-content: space-between;
+      flex-shrink: 0;
     }
 
-    .step-num {
+    .app-statusbar-time {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .app-statusbar-icons {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .bar-icon {
+      width: 14px; height: 8px;
+      background: var(--ink);
+      border-radius: 2px;
+      opacity: 0.8;
+    }
+
+    /* App header */
+    .app-header {
+      background: var(--white);
+      padding: 6px 16px 14px;
+      border-bottom: 1px solid #E5E5EA;
       flex-shrink: 0;
-      width: 36px;
-      height: 36px;
+    }
+
+    .app-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .app-title-sm {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--ink);
+    }
+
+    .app-month {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .app-avatar {
+      width: 28px; height: 28px;
       background: var(--blue);
-      color: var(--white);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 12px;
+      color: white;
       font-weight: 700;
-      font-size: 15px;
-      margin-top: 2px;
     }
 
-    .step-content h4 {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      color: var(--gray-900);
-    }
-
-    .step-content p {
-      font-size: 14px;
-      color: var(--gray-500);
-    }
-
-    /* CTA BOTTOM */
-    .cta-bottom {
-      background: var(--gray-900);
-      color: var(--white);
-      text-align: center;
-      padding: 100px 24px;
-    }
-
-    .cta-bottom h2 {
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      margin-bottom: 16px;
-    }
-
-    .cta-bottom p {
-      font-size: 17px;
-      color: #9CA3AF;
-      margin-bottom: 40px;
-    }
-
-    .cta-bottom .waitlist-form input {
-      background: #1F2937;
-      border-color: #374151;
-      color: var(--white);
-    }
-
-    .cta-bottom .waitlist-form input::placeholder { color: #6B7280; }
-    .cta-bottom .waitlist-form input:focus { border-color: var(--blue); }
-    .cta-bottom .waitlist-note { color: #6B7280; }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--gray-100);
-      padding: 32px 24px;
+    /* Voice button screen */
+    .voice-screen {
+      flex: 1;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      max-width: 1000px;
-      margin: 0 auto;
-      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
       gap: 16px;
     }
 
-    footer .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--gray-900);
-      text-decoration: none;
+    .voice-hint {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
     }
 
-    footer .footer-logo img { width: 24px; height: 24px; border-radius: 6px; }
+    .voice-btn {
+      width: 80px; height: 80px;
+      background: var(--blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 12px rgba(59,131,245,0.15), 0 8px 24px rgba(59,131,245,0.4);
+      animation: voice-pulse 2s ease-in-out infinite;
+    }
 
-    footer nav a {
+    @keyframes voice-pulse {
+      0%, 100% { box-shadow: 0 0 0 12px rgba(59,131,245,0.15), 0 8px 24px rgba(59,131,245,0.4); }
+      50%       { box-shadow: 0 0 0 20px rgba(59,131,245,0.08), 0 8px 24px rgba(59,131,245,0.4); }
+    }
+
+    .mic-icon {
+      font-size: 28px;
+    }
+
+    .voice-bubble {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .voice-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -7px; left: 50%;
+      transform: translateX(-50%);
+      border: 7px solid transparent;
+      border-top-color: var(--white);
+      border-bottom: 0;
+    }
+
+    .voice-waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 20px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      background: var(--blue);
+      border-radius: 2px;
+      animation: wave 1.2s ease-in-out infinite;
+    }
+
+    .wave-bar:nth-child(1) { height: 8px; animation-delay: 0s; }
+    .wave-bar:nth-child(2) { height: 16px; animation-delay: 0.1s; }
+    .wave-bar:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+    .wave-bar:nth-child(4) { height: 20px; animation-delay: 0.3s; }
+    .wave-bar:nth-child(5) { height: 14px; animation-delay: 0.4s; }
+    .wave-bar:nth-child(6) { height: 9px; animation-delay: 0.5s; }
+    .wave-bar:nth-child(7) { height: 18px; animation-delay: 0.6s; }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(1); }
+      50%       { transform: scaleY(0.4); }
+    }
+
+    /* Expense list screen */
+    .exp-screen {
+      flex: 1;
+      overflow: hidden;
+      padding: 12px 0;
+    }
+
+    .exp-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 0 16px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .exp-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      background: var(--white);
+      margin: 1px 0;
+    }
+
+    .exp-icon {
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .exp-details { flex: 1; min-width: 0; }
+
+    .exp-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .exp-cat {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .exp-amount {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* Chart screen */
+    .chart-screen {
+      flex: 1;
+      padding: 12px 16px;
+      overflow: hidden;
+    }
+
+    .chart-total {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .chart-total-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chart-total-amount {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--ink);
+    }
+
+    .chart-total-sub {
+      font-size: 10px;
+      color: #34D399;
+      font-weight: 600;
+    }
+
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .donut {
+      width: 68px; height: 68px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #3B83F5 0% 34%,
+        #F59E0B 34% 58%,
+        #10B981 58% 74%,
+        #8B5CF6 74% 88%,
+        #E5E7EB 88% 100%
+      );
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .donut::after {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      background: var(--white);
+      border-radius: 50%;
+    }
+
+    .donut-legend { flex: 1; }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 5px;
+    }
+
+    .legend-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-name {
+      font-size: 10px;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .legend-pct {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* Budget screen */
+    .budget-screen {
+      flex: 1;
+      padding: 12px 12px;
+      overflow: hidden;
+    }
+
+    .budget-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .budget-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .budget-amounts {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .budget-bar-bg {
+      height: 6px;
+      background: #E4E4E7;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .budget-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    /* ── Marquee ── */
+    .marquee-wrap {
+      background: var(--ink-2);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      padding: 14px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 22s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-track:hover { animation-play-state: paused; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 36px;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .marquee-item .dot {
+      width: 5px; height: 5px;
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    /* ── Sections ── */
+    .section {
+      padding: 120px 24px;
+    }
+
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .section-h2 {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .section-h2.white { color: var(--white); }
+
+    .section-lead {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 40px;
+    }
+
+    .section-lead.white { color: rgba(255,255,255,0.5); }
+
+    /* Feature layout: text + phone side by side */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 80px;
+    }
+
+    .feat-grid.reverse { direction: rtl; }
+    .feat-grid.reverse > * { direction: ltr; }
+
+    .feat-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feat-bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .feat-bullet-icon {
+      width: 36px; height: 36px;
+      background: var(--blue);
+      background: linear-gradient(135deg, var(--blue), #6366F1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .feat-bullet-text strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .feat-bullet-text span {
       font-size: 14px;
-      color: var(--gray-500);
-      text-decoration: none;
-      margin-left: 24px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* dark section variant */
+    .section.dark {
+      background: var(--ink);
+    }
+
+    .section.dark .section-tag { color: #93BBFD; }
+    .section.dark .feat-bullet-text strong { color: var(--white); }
+    .section.dark .feat-bullet-text span { color: rgba(255,255,255,0.45); }
+
+    .phone-wrap-lg {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ── Grid Features ── */
+    .grid-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 56px;
+    }
+
+    .grid-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .grid-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-3px);
+    }
+
+    .grid-card-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .grid-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .grid-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── Privacy section ── */
+    .privacy-section {
+      background: var(--ink);
+      padding: 120px 24px;
+      text-align: center;
+    }
+
+    .privacy-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .privacy-section .section-tag { color: #93BBFD; }
+
+    .privacy-section .section-h2 {
+      color: var(--white);
+      font-size: clamp(32px, 4vw, 52px);
+      margin-bottom: 16px;
+    }
+
+    .privacy-section .section-lead {
+      color: rgba(255,255,255,0.45);
+      max-width: 500px;
+      margin: 0 auto 56px;
+    }
+
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      text-align: left;
+    }
+
+    .privacy-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 24px;
+    }
+
+    .privacy-card-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .privacy-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 5px;
+    }
+
+    .privacy-card p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.55;
+    }
+
+    .privacy-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 40px;
+      color: #93BBFD;
+      font-size: 14px;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(147,187,253,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .privacy-link:hover { border-color: #93BBFD; }
+
+    /* ── CTA bottom ── */
+    .cta-section {
+      padding: 140px 24px;
+      text-align: center;
+      background: var(--white);
+    }
+
+    .cta-inner { max-width: 580px; margin: 0 auto; }
+
+    .cta-section .section-h2 {
+      font-size: clamp(36px, 5vw, 64px);
+      margin-bottom: 16px;
+    }
+
+    .cta-section .section-lead {
+      max-width: 100%;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-form input {
+      flex: 1;
+      min-width: 220px;
+      max-width: 320px;
+      padding: 14px 20px;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      font-size: 15px;
+      outline: none;
+      font-family: inherit;
+      color: var(--ink);
+      transition: border-color 0.2s;
+    }
+
+    .cta-form input:focus { border-color: var(--blue); }
+
+    .cta-form button {
+      background: var(--ink);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 14px 32px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .cta-form button:hover { background: var(--ink-3); }
+    .cta-form button:active { transform: scale(0.97); }
+
+    .cta-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted-2);
+    }
+
+    .cta-success {
+      display: none;
+      color: #059669;
+      font-weight: 600;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--ink);
+      padding: 48px 24px;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--white);
+    }
+
+    .footer-logo img { width: 26px; height: 26px; border-radius: 6px; }
+
+    .footer-logo span {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
       transition: color 0.2s;
     }
 
-    footer nav a:hover { color: var(--gray-900); }
+    .footer-links a:hover { color: var(--white); }
 
-    footer .copyright {
+    .footer-copy {
       font-size: 13px;
-      color: var(--gray-500);
-      width: 100%;
+      color: rgba(255,255,255,0.25);
     }
 
-    @media (max-width: 600px) {
-      .hero { padding: 72px 20px 60px; }
-      .features, .how, .cta-bottom { padding: 72px 20px; }
-      footer { flex-direction: column; align-items: flex-start; }
-      footer nav a:first-child { margin-left: 0; }
+    /* ── Fade-in on scroll ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 56px; }
+      .feat-grid, .feat-grid.reverse { grid-template-columns: 1fr; direction: ltr; gap: 48px; }
+      .grid-features { grid-template-columns: 1fr 1fr; }
+      .privacy-grid { grid-template-columns: 1fr; }
+      .phone-wrap-lg { order: -1; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .section { padding: 80px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .grid-features { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="nav-logo" href="/">
-      <img src="/logo.png" alt="Zpend logo" />
-      <span>Zpend</span>
-    </a>
-    <a class="nav-cta" href="#waitlist">
-      Get Early Access
-    </a>
+  <!-- ── NAV ── -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="/">
+        <img src="/logo.png" alt="Zpend" />
+        <span>Zpend</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#waitlist" class="nav-cta">Get Early Access</a></li>
+      </ul>
+    </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- ── HERO ── -->
   <section class="hero">
-    <div class="hero-badge">
-      <span>📱</span> Coming to iOS — Join the Waitlist
-    </div>
-    <h1>Your Money,<br /><em>Under Control</em></h1>
-    <p>Just say "$12 for lunch" and it's logged. Track expenses by voice or text — no spreadsheets, no hassle.</p>
+    <div class="hero-bg-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          Coming to iPhone — Join the waitlist
+        </div>
+        <h1>Track expenses<br />by <span class="accent">voice.</span></h1>
+        <p>Say "$12 for lunch" and it's instantly logged. No forms, no menus — just talk.</p>
+        <form class="hero-form" onsubmit="handleWaitlist(event, 'hero-success')">
+          <input type="email" placeholder="your@email.com" required autocomplete="email" />
+          <button type="submit">Notify Me</button>
+        </form>
+        <p class="hero-note">Free to download. Available on iPhone.</p>
+        <p class="hero-success" id="hero-success">✓ You're on the list. We'll email you when Zpend launches.</p>
+      </div>
 
-    <div id="waitlist">
-      <form class="waitlist-form" onsubmit="handleSubmit(event)">
+      <!-- PHONE MOCKUP — Voice screen -->
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="app-statusbar">
+              <span class="app-statusbar-time">9:41</span>
+              <div class="app-statusbar-icons">
+                <div class="bar-icon" style="width:14px;height:7px;background:var(--ink);border-radius:2px;opacity:0.7"></div>
+                <div style="width:12px;height:7px;background:var(--ink);border-radius:2px;opacity:0.7"></div>
+              </div>
+            </div>
+            <div class="app-header">
+              <div class="app-header-row">
+                <div>
+                  <div class="app-title-sm">Zpend</div>
+                  <div class="app-month">May 2026</div>
+                </div>
+                <div class="app-avatar">Z</div>
+              </div>
+            </div>
+            <div class="voice-screen">
+              <div class="voice-bubble">"$12 for lunch"</div>
+              <div class="voice-btn">
+                <span class="mic-icon">🎤</span>
+              </div>
+              <div class="voice-waveform">
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+              </div>
+              <div class="voice-hint">Tap and speak your expense</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MARQUEE ── -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <!-- duplicate set for seamless loop -->
+      <div class="marquee-item"><span class="dot"></span> Voice Logging</div>
+      <div class="marquee-item"><span class="dot"></span> Smart Categories</div>
+      <div class="marquee-item"><span class="dot"></span> Budget Limits</div>
+      <div class="marquee-item"><span class="dot"></span> Monthly Insights</div>
+      <div class="marquee-item"><span class="dot"></span> Recurring Bills</div>
+      <div class="marquee-item"><span class="dot"></span> Custom Groups</div>
+      <div class="marquee-item"><span class="dot"></span> No Account Needed</div>
+      <div class="marquee-item"><span class="dot"></span> On-Device Privacy</div>
+      <div class="marquee-item"><span class="dot"></span> Voice Logging</div>
+      <div class="marquee-item"><span class="dot"></span> Smart Categories</div>
+      <div class="marquee-item"><span class="dot"></span> Budget Limits</div>
+      <div class="marquee-item"><span class="dot"></span> Monthly Insights</div>
+      <div class="marquee-item"><span class="dot"></span> Recurring Bills</div>
+      <div class="marquee-item"><span class="dot"></span> Custom Groups</div>
+      <div class="marquee-item"><span class="dot"></span> No Account Needed</div>
+      <div class="marquee-item"><span class="dot"></span> On-Device Privacy</div>
+    </div>
+  </div>
+
+  <!-- ── FEATURE: VOICE ── -->
+  <section class="section" id="features">
+    <div class="section-inner">
+      <div class="feat-grid">
+        <div class="reveal">
+          <span class="section-tag">Voice First</span>
+          <h2 class="section-h2">Just say it.<br />It's logged.</h2>
+          <p class="section-lead">Natural language expense logging — say "$45 for groceries" or "coffee, $5" and Zpend figures out the rest.</p>
+          <ul class="feat-bullets">
+            <li class="feat-bullet reveal reveal-delay-1">
+              <div class="feat-bullet-icon">🎤</div>
+              <div class="feat-bullet-text">
+                <strong>Natural language input</strong>
+                <span>Speak like you normally would — no special commands or formats needed.</span>
+              </div>
+            </li>
+            <li class="feat-bullet reveal reveal-delay-2">
+              <div class="feat-bullet-icon">⚡️</div>
+              <div class="feat-bullet-text">
+                <strong>Instant logging</strong>
+                <span>Expense is categorized and saved before you put your phone away.</span>
+              </div>
+            </li>
+            <li class="feat-bullet reveal reveal-delay-3">
+              <div class="feat-bullet-icon">🔒</div>
+              <div class="feat-bullet-text">
+                <strong>On-device processing</strong>
+                <span>Voice is processed by Apple's on-device speech engine. Nothing leaves your phone.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Phone: voice screen (same as hero) -->
+        <div class="phone-wrap-lg reveal reveal-delay-1">
+          <div class="phone" style="animation-delay: 0.5s">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="app-statusbar">
+                <span class="app-statusbar-time">9:41</span>
+                <div class="app-statusbar-icons">
+                  <div style="width:14px;height:7px;background:var(--ink);border-radius:2px;opacity:0.7"></div>
+                </div>
+              </div>
+              <div class="app-header">
+                <div class="app-header-row">
+                  <div class="app-title-sm">Add Expense</div>
+                  <div style="font-size:11px;color:var(--muted)">Cancel</div>
+                </div>
+              </div>
+              <div class="voice-screen">
+                <div style="font-size:13px;color:var(--muted);text-align:center;padding:0 16px">
+                  Try saying something like...
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;width:100%">
+                  <div style="background:#EFF6FF;border-radius:10px;padding:8px 12px;font-size:12px;color:#1D4ED8;font-weight:600">"$45 for groceries"</div>
+                  <div style="background:#F0FDF4;border-radius:10px;padding:8px 12px;font-size:12px;color:#166534;font-weight:600">"Lunch, twelve dollars"</div>
+                  <div style="background:#FDF4FF;border-radius:10px;padding:8px 12px;font-size:12px;color:#6B21A8;font-weight:600">"Uber ride $18.50"</div>
+                </div>
+                <div class="voice-btn">
+                  <span class="mic-icon">🎤</span>
+                </div>
+                <div class="voice-waveform">
+                  <div class="wave-bar"></div><div class="wave-bar"></div>
+                  <div class="wave-bar"></div><div class="wave-bar"></div>
+                  <div class="wave-bar"></div><div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURE: CATEGORIES + LIST (dark) ── -->
+  <section class="section dark" id="how-it-works">
+    <div class="section-inner">
+      <div class="feat-grid reverse">
+        <div class="reveal">
+          <span class="section-tag">Smart Categories</span>
+          <h2 class="section-h2 white">14 categories,<br />ready to go.</h2>
+          <p class="section-lead white">Food, transport, bills, health — the categories you actually use, pre-loaded. Add custom ones when you need them.</p>
+          <ul class="feat-bullets">
+            <li class="feat-bullet reveal reveal-delay-1">
+              <div class="feat-bullet-icon">🏷️</div>
+              <div class="feat-bullet-text">
+                <strong>Auto-categorization</strong>
+                <span>Zpend detects the category from what you say so you don't have to pick.</span>
+              </div>
+            </li>
+            <li class="feat-bullet reveal reveal-delay-2">
+              <div class="feat-bullet-icon">✏️</div>
+              <div class="feat-bullet-text">
+                <strong>Fully customizable</strong>
+                <span>Add, rename, or delete categories. Make it yours.</span>
+              </div>
+            </li>
+            <li class="feat-bullet reveal reveal-delay-3">
+              <div class="feat-bullet-icon">👥</div>
+              <div class="feat-bullet-text">
+                <strong>Groups</strong>
+                <span>Organize by context — work trips, household, personal — and filter easily.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Phone: expense list -->
+        <div class="phone-wrap-lg reveal">
+          <div class="phone" style="animation-delay: 0.8s">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="app-statusbar">
+                <span class="app-statusbar-time">9:41</span>
+                <div class="app-statusbar-icons">
+                  <div style="width:14px;height:7px;background:var(--ink);border-radius:2px;opacity:0.7"></div>
+                </div>
+              </div>
+              <div class="app-header">
+                <div class="app-header-row">
+                  <div>
+                    <div class="app-title-sm">May 2026</div>
+                    <div class="app-month">$1,240 spent</div>
+                  </div>
+                  <div class="app-avatar">Z</div>
+                </div>
+              </div>
+              <div class="exp-screen">
+                <div class="exp-section-label">Today</div>
+                <div class="exp-row">
+                  <div class="exp-icon" style="background:#FEF3C7">🍔</div>
+                  <div class="exp-details">
+                    <div class="exp-name">Lunch</div>
+                    <div class="exp-cat">Food & Drink</div>
+                  </div>
+                  <div class="exp-amount">$12.00</div>
+                </div>
+                <div class="exp-row">
+                  <div class="exp-icon" style="background:#DBEAFE">🚕</div>
+                  <div class="exp-details">
+                    <div class="exp-name">Uber</div>
+                    <div class="exp-cat">Transport</div>
+                  </div>
+                  <div class="exp-amount">$18.50</div>
+                </div>
+                <div class="exp-section-label" style="margin-top:10px">Yesterday</div>
+                <div class="exp-row">
+                  <div class="exp-icon" style="background:#DCFCE7">🛒</div>
+                  <div class="exp-details">
+                    <div class="exp-name">Groceries</div>
+                    <div class="exp-cat">Shopping</div>
+                  </div>
+                  <div class="exp-amount">$67.30</div>
+                </div>
+                <div class="exp-row">
+                  <div class="exp-icon" style="background:#F3E8FF">☕</div>
+                  <div class="exp-details">
+                    <div class="exp-name">Coffee</div>
+                    <div class="exp-cat">Food & Drink</div>
+                  </div>
+                  <div class="exp-amount">$5.50</div>
+                </div>
+                <div class="exp-row">
+                  <div class="exp-icon" style="background:#FFE4E6">💊</div>
+                  <div class="exp-details">
+                    <div class="exp-name">Pharmacy</div>
+                    <div class="exp-cat">Health</div>
+                  </div>
+                  <div class="exp-amount">$22.00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURE: INSIGHTS ── -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="feat-grid">
+        <div class="reveal">
+          <span class="section-tag">Insights</span>
+          <h2 class="section-h2">Know where<br />your money goes.</h2>
+          <p class="section-lead">Monthly breakdowns, category trends, and budget progress — all in one clean view. No spreadsheets.</p>
+          <ul class="feat-bullets">
+            <li class="feat-bullet reveal reveal-delay-1">
+              <div class="feat-bullet-icon">📊</div>
+              <div class="feat-bullet-text">
+                <strong>Monthly breakdown</strong>
+                <span>See exactly what you spent, by category, month by month.</span>
+              </div>
+            </li>
+            <li class="feat-bullet reveal reveal-delay-2">
+              <div class="feat-bullet-icon">💰</div>
+              <div class="feat-bullet-text">
+                <strong>Budget limits</strong>
+                <span>Set a ceiling per category. Watch the bar fill — don't let it go red.</span>
+              </div>
+            </li>
+            <li class="feat-bullet reveal reveal-delay-3">
+              <div class="feat-bullet-icon">📈</div>
+              <div class="feat-bullet-text">
+                <strong>Spending trends</strong>
+                <span>Compare this month to last. Spot patterns before they become problems.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Phone: chart + budgets -->
+        <div class="phone-wrap-lg reveal reveal-delay-1">
+          <div class="phone" style="animation-delay: 1.2s">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="app-statusbar">
+                <span class="app-statusbar-time">9:41</span>
+                <div class="app-statusbar-icons">
+                  <div style="width:14px;height:7px;background:var(--ink);border-radius:2px;opacity:0.7"></div>
+                </div>
+              </div>
+              <div class="app-header">
+                <div class="app-header-row">
+                  <div class="app-title-sm">Insights</div>
+                  <div style="font-size:11px;color:var(--blue);font-weight:600">May</div>
+                </div>
+              </div>
+              <div class="chart-screen">
+                <div class="chart-total">
+                  <div class="chart-total-label">Total Spent</div>
+                  <div class="chart-total-amount">$1,240</div>
+                  <div class="chart-total-sub">↓ 8% vs April</div>
+                </div>
+                <div class="donut-wrap">
+                  <div class="donut"></div>
+                  <div class="donut-legend">
+                    <div class="legend-row">
+                      <div class="legend-dot" style="background:#3B83F5"></div>
+                      <span class="legend-name">Food</span>
+                      <span class="legend-pct">34%</span>
+                    </div>
+                    <div class="legend-row">
+                      <div class="legend-dot" style="background:#F59E0B"></div>
+                      <span class="legend-name">Bills</span>
+                      <span class="legend-pct">24%</span>
+                    </div>
+                    <div class="legend-row">
+                      <div class="legend-dot" style="background:#10B981"></div>
+                      <span class="legend-name">Transport</span>
+                      <span class="legend-pct">16%</span>
+                    </div>
+                    <div class="legend-row">
+                      <div class="legend-dot" style="background:#8B5CF6"></div>
+                      <span class="legend-name">Shopping</span>
+                      <span class="legend-pct">14%</span>
+                    </div>
+                    <div class="legend-row">
+                      <div class="legend-dot" style="background:#E4E4E7"></div>
+                      <span class="legend-name">Other</span>
+                      <span class="legend-pct">12%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURE GRID: remaining features ── -->
+  <section class="section" style="padding-top:0">
+    <div class="section-inner">
+      <div class="grid-features">
+        <div class="grid-card reveal">
+          <span class="grid-card-icon">🔄</span>
+          <h3>Recurring Bills</h3>
+          <p>Auto-log rent, subscriptions, and regular expenses. Set it once and they appear every month.</p>
+        </div>
+        <div class="grid-card reveal reveal-delay-1">
+          <span class="grid-card-icon">🗂️</span>
+          <h3>Custom Groups</h3>
+          <p>Separate work expenses from personal, travel from household. Organize the way you think.</p>
+        </div>
+        <div class="grid-card reveal reveal-delay-2">
+          <span class="grid-card-icon">✍️</span>
+          <h3>Type or Voice</h3>
+          <p>Prefer typing? That works too. Same speed, same smart category detection.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRIVACY ── -->
+  <section class="privacy-section" id="privacy">
+    <div class="privacy-inner">
+      <span class="section-tag">Privacy</span>
+      <h2 class="section-h2">Your data. Your device.<br />Always.</h2>
+      <p class="section-lead">Zpend is built local-first. No account, no servers, no tracking. Your financial data never leaves your iPhone.</p>
+
+      <div class="privacy-grid reveal">
+        <div class="privacy-card reveal">
+          <span class="privacy-card-icon">📵</span>
+          <h4>No account needed</h4>
+          <p>Open the app and start tracking. No sign-up, no email, no password.</p>
+        </div>
+        <div class="privacy-card reveal reveal-delay-1">
+          <span class="privacy-card-icon">📱</span>
+          <h4>Stored on-device only</h4>
+          <p>Your expenses live in iOS local storage — not on our servers or any cloud.</p>
+        </div>
+        <div class="privacy-card reveal reveal-delay-2">
+          <span class="privacy-card-icon">🚫</span>
+          <h4>Zero tracking</h4>
+          <p>No analytics SDKs. No ad networks. No behavior tracking of any kind.</p>
+        </div>
+        <div class="privacy-card reveal reveal-delay-3">
+          <span class="privacy-card-icon">🎤</span>
+          <h4>Voice stays on-device</h4>
+          <p>Speech recognition uses Apple's on-device engine. Your voice never leaves your phone.</p>
+        </div>
+      </div>
+
+      <a class="privacy-link" href="/privacy.html">Read the full Privacy Policy →</a>
+    </div>
+  </section>
+
+  <!-- ── CTA / WAITLIST ── -->
+  <section class="cta-section" id="waitlist">
+    <div class="cta-inner">
+      <span class="section-tag" style="color:var(--blue)">Coming Soon</span>
+      <h2 class="section-h2">Be first when<br />Zpend launches.</h2>
+      <p class="section-lead">Join the waitlist and we'll email you the moment it's available on the App Store.</p>
+      <form class="cta-form" onsubmit="handleWaitlist(event, 'cta-success')">
         <input type="email" placeholder="your@email.com" required autocomplete="email" />
-        <button type="submit">Notify Me</button>
+        <button type="submit">Join Waitlist</button>
       </form>
-      <p class="waitlist-note">No spam. We'll only email when the app launches.</p>
-      <p class="success-msg" id="success">✓ You're on the list! We'll be in touch.</p>
+      <p class="cta-note">Free to download. No spam, ever.</p>
+      <p class="cta-success" id="cta-success">✓ You're on the list!</p>
     </div>
   </section>
 
-  <!-- FEATURES -->
-  <section class="features">
-    <p class="section-label">Features</p>
-    <h2 class="section-title">Everything you need,<br />nothing you don't</h2>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <span class="feature-icon">🎙️</span>
-        <h3>Voice Logging</h3>
-        <p>Say "$12 for lunch" and it's instantly logged. No tapping through menus, no friction.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🏷️</span>
-        <h3>Smart Categories</h3>
-        <p>14 categories ready to go. Add your own custom ones if you need more control.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">💰</span>
-        <h3>Budget Limits</h3>
-        <p>Set spending limits per category. Get a clear view before you overspend.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🔄</span>
-        <h3>Recurring Bills</h3>
-        <p>Auto-log subscriptions and bills so they never slip through the cracks.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">📊</span>
-        <h3>Monthly Insights</h3>
-        <p>See exactly where your money went, month by month. Charts, trends, no surprises.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">👥</span>
-        <h3>Groups</h3>
-        <p>Organize expenses by context — work, travel, personal — and keep things tidy.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="how">
-    <p class="section-label">How it works</p>
-    <h2 class="section-title">Log an expense<br />in seconds</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h4>Open the app</h4>
-          <p>Zpend is always one tap away. No login screen, no loading — it's instant.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h4>Say or type your expense</h4>
-          <p>Tap the mic and say "$12 for lunch" or just type it. Zpend figures out the category for you.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h4>See the big picture</h4>
-          <p>Check your monthly summary, budget progress, and trends anytime — all in one clean dashboard.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA BOTTOM -->
-  <section class="cta-bottom">
-    <h2>Know where your<br />money goes</h2>
-    <p>Join the waitlist — be first when Zpend launches.</p>
-    <form class="waitlist-form" style="justify-content:center" onsubmit="handleSubmit(event)">
-      <input type="email" placeholder="your@email.com" required autocomplete="email" />
-      <button type="submit">Join Waitlist</button>
-    </form>
-    <p class="waitlist-note">Free to download. Available on iPhone.</p>
-  </section>
-
-  <!-- FOOTER -->
+  <!-- ── FOOTER ── -->
   <footer>
-    <a class="footer-logo" href="/">
-      <img src="/logo.png" alt="Zpend" />
-      Zpend
-    </a>
-    <nav>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms of Use</a>
-      <a href="mailto:support@zpend.app">Contact</a>
-    </nav>
-    <p class="copyright">© 2026 Zpend. All rights reserved.</p>
+    <div class="footer-inner">
+      <a class="footer-logo" href="/">
+        <img src="/logo.png" alt="Zpend" />
+        <span>Zpend</span>
+      </a>
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Use</a>
+        <a href="mailto:support@zpend.app">Contact</a>
+      </div>
+      <span class="footer-copy">© 2026 Zpend. All rights reserved.</span>
+    </div>
   </footer>
 
   <script>
-    function handleSubmit(e) {
+    // Sticky nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Waitlist
+    function handleWaitlist(e, successId) {
       e.preventDefault();
       const form = e.target;
       const email = form.querySelector('input[type="email"]').value;
-      // Simple mailto fallback — replace with a form service like Formspree later
-      const successEl = document.getElementById('success');
+      const emails = JSON.parse(localStorage.getItem('zpend_waitlist') || '[]');
+      if (!emails.includes(email)) emails.push(email);
+      localStorage.setItem('zpend_waitlist', JSON.stringify(emails));
       form.style.display = 'none';
-      if (successEl) successEl.style.display = 'block';
-      // Store email locally for now
-      const emails = JSON.parse(localStorage.getItem('waitlist') || '[]');
-      emails.push({ email, date: new Date().toISOString() });
-      localStorage.setItem('waitlist', JSON.stringify(emails));
+      const note = form.nextElementSibling;
+      if (note && note.classList.contains('cta-note')) note.style.display = 'none';
+      document.getElementById(successId).style.display = 'block';
     }
   </script>
 
