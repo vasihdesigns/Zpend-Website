@@ -117,7 +117,7 @@
     .stars { color: #F59E0B; font-size: 15px; letter-spacing: 1px; }
     .hero-meta span { font-size: 13px; color: var(--muted); font-weight: 500; }
 
-    /* ── IPHONE FRAME ── */
+    /* ── IPHONE FRAME (feature sections) ── */
     .iphone {
       position: relative;
       background: #1A1A1C; border-radius: 54px; border: 8px solid #2C2C2E;
@@ -132,13 +132,113 @@
       border-radius: 0 0 18px 18px; z-index: 10;
     }
     /* sizes */
-    .ph-hero  { width: 300px; height: 614px; border-radius: 56px; }
     .ph-feat  { width: 270px; height: 553px; }
     .ph-step  { width: 176px; height: 360px; border-radius: 36px; border-width: 6px; }
 
-    /* floating animation on hero phone */
-    .ph-hero { animation: float 5s ease-in-out infinite; }
-    @keyframes float { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-12px); } }
+    /* ── REALISTIC HERO IPHONE 15 PRO ── */
+    /* ── TWO-PHONE HERO ── */
+    .hero-phone-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 520px;
+      height: 580px;
+    }
+
+    .iphone-pro {
+      position: absolute;
+      width: 260px;
+      height: 532px;
+      flex-shrink: 0;
+    }
+
+    /* Back phone — voice screen, tilted left, slightly behind */
+    .iphone-pro.ip-back {
+      left: 0; top: 40px; z-index: 1;
+      transform: perspective(1200px) rotateY(6deg) rotateX(2deg) rotate(-3deg);
+      filter: drop-shadow(0 30px 50px rgba(0,0,0,0.22));
+      animation: float-back 7s ease-in-out infinite;
+    }
+    @keyframes float-back {
+      0%,100% { transform: perspective(1200px) rotateY(6deg) rotateX(2deg) rotate(-3deg) translateY(0); }
+      50%      { transform: perspective(1200px) rotateY(6deg) rotateX(2deg) rotate(-3deg) translateY(-10px); }
+    }
+
+    /* Front phone — home screen, tilted right, in front */
+    .iphone-pro.ip-front {
+      right: 0; top: 0; z-index: 2;
+      transform: perspective(1200px) rotateY(-8deg) rotateX(2deg) rotate(3deg);
+      filter: drop-shadow(-10px 40px 60px rgba(0,0,0,0.30)) drop-shadow(0 8px 20px rgba(0,0,0,0.14));
+      animation: float-front 6s ease-in-out infinite;
+    }
+    @keyframes float-front {
+      0%,100% { transform: perspective(1200px) rotateY(-8deg) rotateX(2deg) rotate(3deg) translateY(0); }
+      50%      { transform: perspective(1200px) rotateY(-8deg) rotateX(2deg) rotate(3deg) translateY(-14px); }
+    }
+
+    /* outer titanium body */
+    .ip-body {
+      position: absolute; inset: 0;
+      border-radius: 52px;
+      background: linear-gradient(150deg,
+        #3a3a3c 0%, #2c2c2e 18%, #1c1c1e 50%, #2a2a2c 80%, #38383a 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.13),
+        inset 1px 0 0 rgba(255,255,255,0.06),
+        inset -1px 0 0 rgba(0,0,0,0.35),
+        0 0 0 1px rgba(0,0,0,0.6);
+    }
+
+    /* edge rail highlight — titanium sheen */
+    .ip-rail {
+      position: absolute; inset: 3px;
+      border-radius: 50px;
+      background: transparent;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        inset 0 1px 2px rgba(255,255,255,0.1);
+      pointer-events: none;
+    }
+
+    /* screen bezel */
+    .ip-screen {
+      position: absolute;
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+      border-radius: 44px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .ip-screen img {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+    }
+
+
+    /* side buttons */
+    .ip-btn {
+      position: absolute;
+      background: linear-gradient(90deg, #2e2e30, #3a3a3c);
+      border-radius: 2px;
+    }
+    /* volume up */
+    .ip-vol-up   { left: -3px; top: 136px; width: 3px; height: 44px; border-radius: 2px 0 0 2px; }
+    /* volume down */
+    .ip-vol-down { left: -3px; top: 192px; width: 3px; height: 44px; border-radius: 2px 0 0 2px; }
+    /* silent switch */
+    .ip-silent   { left: -3px; top: 94px;  width: 3px; height: 30px; border-radius: 2px 0 0 2px; }
+    /* power */
+    .ip-power    { right: -3px; top: 160px; width: 3px; height: 70px; border-radius: 0 2px 2px 0; }
+
+    /* reflection sheen over screen */
+    .ip-sheen {
+      position: absolute; inset: 0;
+      border-radius: 44px;
+      background: linear-gradient(135deg,
+        rgba(255,255,255,0.06) 0%,
+        rgba(255,255,255,0.01) 40%,
+        transparent 60%);
+      pointer-events: none; z-index: 5;
+    }
 
     /* ── MARQUEE ── */
     .marquee {
@@ -296,7 +396,9 @@
       .slides-row { grid-template-columns: 1fr 1fr; gap: 12px; }
       .footer-inner { flex-direction: column; align-items: flex-start; }
       .ph-feat { width: 240px; height: 491px; }
-      .ph-hero { width: 264px; height: 540px; }
+      .hero-phone-wrap { width: 260px; height: 532px; }
+      .iphone-pro.ip-back { display: none; }
+      .iphone-pro.ip-front { position: relative; right: auto; top: auto; width: 240px; height: 492px; transform: perspective(1200px) rotateY(-8deg) rotateX(2deg) rotate(3deg); }
     }
   </style>
 </head>
@@ -329,7 +431,7 @@
     <div class="hero-inner">
       <div class="hero-text reveal">
         <div class="hero-badge">🎤 Voice-first expense tracking for iPhone</div>
-        <h1>Track every<br />expense.<br /><span class="g">Effortlessly.</span></h1>
+        <h1>Track every<br />expense.<br /><span class="g">Smartly.</span></h1>
         <p class="hero-sub">Say "$12 for lunch" and it's logged instantly. Smart categories, recurring bills, budget tracking, and monthly insights — all 100% private on your device.</p>
         <div class="hero-actions">
           <a class="btn-appstore" href="#download">
@@ -347,9 +449,31 @@
       </div>
       <!-- Hero phone: populated home screen showing real data + chart -->
       <div class="hero-phone-wrap reveal d1">
-        <div class="iphone ph-hero">
-          <div class="iphone-notch"></div>
-          <img src="/app-home.png" alt="Zpend home screen" />
+        <!-- Back phone: voice screen -->
+        <div class="iphone-pro ip-back">
+          <div class="ip-body"></div>
+          <div class="ip-rail"></div>
+          <div class="ip-btn ip-silent"></div>
+          <div class="ip-btn ip-vol-up"></div>
+          <div class="ip-btn ip-vol-down"></div>
+          <div class="ip-btn ip-power"></div>
+          <div class="ip-screen">
+            <img src="/app-voice.png" alt="Zpend voice logging" />
+            <div class="ip-sheen"></div>
+          </div>
+        </div>
+        <!-- Front phone: home screen -->
+        <div class="iphone-pro ip-front">
+          <div class="ip-body"></div>
+          <div class="ip-rail"></div>
+          <div class="ip-btn ip-silent"></div>
+          <div class="ip-btn ip-vol-up"></div>
+          <div class="ip-btn ip-vol-down"></div>
+          <div class="ip-btn ip-power"></div>
+          <div class="ip-screen">
+            <img src="/app-home.png" alt="Zpend home screen" />
+            <div class="ip-sheen"></div>
+          </div>
         </div>
       </div>
     </div>
