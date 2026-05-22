@@ -4,42 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy — Zpend</title>
-  <link rel="icon" href="/logo.png" />
+  <link rel="icon" href="/logo.svg" type="image/svg+xml" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue:      #3B83F5;
-      --ink:       #09090B;
-      --ink-2:     #18181B;
-      --muted:     #71717A;
-      --border:    #E4E4E7;
-      --surface:   #FAFAFA;
-      --white:     #FFFFFF;
-      --max:       1100px;
+      --brand:   #3A3585;
+      --ink:     #0A0A0F;
+      --ink-2:   #1A1A2E;
+      --muted:   #6B6B8A;
+      --border:  #EBEBF0;
+      --surface: #F7F7FB;
+      --white:   #FFFFFF;
+      --max:     1120px;
     }
 
-    html { scroll-behavior: smooth; }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
       background: var(--white);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Nav */
     .nav {
       position: sticky;
       top: 0; z-index: 200;
-      height: 62px;
+      height: 64px;
       display: flex;
       align-items: center;
-      padding: 0 32px;
-      background: rgba(9,9,11,0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 28px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
 
     .nav-inner {
@@ -54,44 +51,82 @@
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 9px;
-      color: var(--white);
+      gap: 10px;
       text-decoration: none;
+      color: var(--ink);
     }
 
-    .nav-logo img { width: 28px; height: 28px; border-radius: 7px; }
-    .nav-logo span { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+    .nav-logo img { width: 32px; height: 32px; }
+    .nav-logo span { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; }
 
     .nav-back {
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       transition: color 0.2s;
     }
 
-    .nav-back:hover { color: var(--white); }
+    .nav-back:hover { color: var(--ink); }
+
+    /* Summary banner */
+    .summary-banner {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 28px;
+    }
+
+    .summary-banner-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .summary-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+    }
+
+    .summary-pill-icon { font-size: 20px; flex-shrink: 0; }
+
+    .summary-pill-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .summary-pill-text span {
+      font-size: 11px;
+      color: var(--muted);
+    }
 
     /* Content */
     .page-wrap {
       max-width: 720px;
       margin: 0 auto;
-      padding: 72px 24px 120px;
+      padding: 72px 28px 120px;
     }
 
     .page-tag {
       display: inline-block;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 1.8px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      color: var(--blue);
+      color: var(--brand);
       margin-bottom: 16px;
     }
 
-    .page-wrap h1 {
+    h1 {
       font-size: clamp(36px, 5vw, 56px);
       font-weight: 800;
       letter-spacing: -2px;
@@ -103,7 +138,7 @@
     .updated {
       font-size: 14px;
       color: var(--muted);
-      margin-bottom: 56px;
+      margin-bottom: 48px;
       padding-bottom: 32px;
       border-bottom: 1px solid var(--border);
     }
@@ -113,35 +148,63 @@
       font-weight: 700;
       letter-spacing: -0.4px;
       color: var(--ink);
-      margin: 48px 0 12px;
+      margin: 48px 0 14px;
     }
 
     .page-wrap p {
       font-size: 16px;
-      color: #3F3F46;
+      color: #3A3A52;
       line-height: 1.75;
       margin-bottom: 16px;
     }
 
     .page-wrap ul {
-      padding-left: 20px;
+      padding-left: 0;
       margin-bottom: 16px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .page-wrap ul li {
       font-size: 16px;
-      color: #3F3F46;
-      line-height: 1.75;
-      margin-bottom: 8px;
+      color: #3A3A52;
+      line-height: 1.6;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
     }
 
-    a { color: var(--blue); text-decoration: none; }
+    .page-wrap ul li::before {
+      content: '✓';
+      color: #049667;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .highlight-box {
+      background: #F0F0FF;
+      border: 1.5px solid #DCDCF5;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+
+    .highlight-box p {
+      color: var(--brand);
+      font-weight: 600;
+      margin: 0;
+      font-size: 15px;
+    }
+
+    a { color: var(--brand); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Footer */
     footer {
-      background: var(--ink-2);
-      padding: 40px 24px;
+      background: var(--ink-2, #1A1A2E);
+      padding: 40px 28px;
     }
 
     .footer-inner {
@@ -158,12 +221,12 @@
       display: flex;
       align-items: center;
       gap: 9px;
-      color: var(--white);
+      color: white;
       text-decoration: none;
     }
 
-    .footer-logo img { width: 26px; height: 26px; border-radius: 6px; }
-    .footer-logo span { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+    .footer-logo img { width: 26px; height: 26px; }
+    .footer-logo span { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
 
     .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
 
@@ -174,11 +237,16 @@
       transition: color 0.2s;
     }
 
-    .footer-links a:hover { color: var(--white); }
+    .footer-links a:hover { color: white; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.25); }
 
-    .footer-copy {
-      font-size: 13px;
-      color: rgba(255,255,255,0.25);
+    @media (max-width: 700px) {
+      .summary-banner-inner { grid-template-columns: 1fr 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 400px) {
+      .summary-banner-inner { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -187,58 +255,101 @@
   <nav class="nav">
     <div class="nav-inner">
       <a class="nav-logo" href="/">
-        <img src="/logo.png" alt="Zpend" />
+        <img src="/logo.svg" alt="Zpend" />
         <span>Zpend</span>
       </a>
       <a class="nav-back" href="/">← Back to home</a>
     </div>
   </nav>
 
+  <!-- At-a-glance summary -->
+  <div class="summary-banner">
+    <div class="summary-banner-inner">
+      <div class="summary-pill">
+        <span class="summary-pill-icon">🚫</span>
+        <div class="summary-pill-text">
+          <strong>No data collected</strong>
+          <span>We collect nothing</span>
+        </div>
+      </div>
+      <div class="summary-pill">
+        <span class="summary-pill-icon">📱</span>
+        <div class="summary-pill-text">
+          <strong>Stored on your device</strong>
+          <span>Or your own iCloud</span>
+        </div>
+      </div>
+      <div class="summary-pill">
+        <span class="summary-pill-icon">👤</span>
+        <div class="summary-pill-text">
+          <strong>No account required</strong>
+          <span>Open and start tracking</span>
+        </div>
+      </div>
+      <div class="summary-pill">
+        <span class="summary-pill-icon">🔒</span>
+        <div class="summary-pill-text">
+          <strong>No servers, no tracking</strong>
+          <span>Zero third-party access</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="page-wrap">
     <span class="page-tag">Legal</span>
     <h1>Privacy Policy</h1>
     <p class="updated">Last updated: May 22, 2026</p>
 
-    <p>Zpend is built on a simple principle: your financial data is yours. This policy explains exactly what we collect, what we don't, and why.</p>
+    <div class="highlight-box">
+      <p>The short version: Zpend does not collect, transmit, or store any of your data on our servers. Your expenses live entirely on your iPhone — or in your own personal iCloud account if you choose to enable backup. We never see your data. No one does, except you.</p>
+    </div>
 
-    <h2>1. What We Collect</h2>
-    <p><strong>Expense data you enter:</strong> Everything you log — amounts, categories, notes — is stored locally on your device using iOS system storage. It does not leave your device.</p>
-    <p><strong>No personal information:</strong> Zpend does not require an account. We never collect your name, email address, phone number, or any personal identifiers through the App.</p>
-    <p><strong>Voice input:</strong> When you use voice logging, your speech is processed by Apple's on-device Speech framework. Audio is never sent to Zpend or any third-party server.</p>
-
-    <h2>2. What We Don't Collect</h2>
+    <h2>1. We collect no data</h2>
+    <p>Zpend does not collect any personal information or usage data — at all. This includes:</p>
     <ul>
-      <li>No analytics or usage tracking</li>
-      <li>No advertising identifiers</li>
-      <li>No crash reporting tools that send data externally</li>
-      <li>No behavioral data or heatmaps</li>
+      <li>No names, email addresses, or contact information</li>
+      <li>No financial data or expense amounts</li>
+      <li>No analytics or usage statistics</li>
+      <li>No device identifiers or advertising IDs</li>
+      <li>No crash reports sent to external services</li>
+      <li>No behavioral tracking of any kind</li>
     </ul>
 
-    <h2>3. Data Storage</h2>
-    <p>All data is stored locally on your iPhone using iOS system storage. If you delete Zpend, all data is permanently removed from your device.</p>
-    <p>If iCloud Backup is enabled on your device, your app data may be included in your personal iCloud backup. This is managed entirely by Apple under <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</p>
-
-    <h2>4. Third-Party Services</h2>
-    <p>Zpend does not integrate analytics, advertising, or tracking SDKs. The only system frameworks used are native Apple APIs:</p>
+    <h2>2. Where your data lives</h2>
+    <p>Everything you enter into Zpend — every expense, category, and budget — is stored in one of two places, both fully under your control:</p>
     <ul>
-      <li><strong>Speech framework</strong> — for voice expense logging (on-device only)</li>
-      <li><strong>StoreKit</strong> — if in-app purchases are offered in the future</li>
+      <li><strong>On your iPhone</strong> — by default, all data is stored locally using iOS system storage on your device</li>
+      <li><strong>Your personal iCloud</strong> — if you enable iCloud Backup in the app's settings, your data syncs to your own iCloud account via Apple's CloudKit framework. This is your private iCloud storage, not Zpend's servers</li>
     </ul>
+    <p>Zpend has no servers. There is no Zpend database, no Zpend cloud, and no Zpend backend that receives or stores your information.</p>
 
-    <h2>5. Children's Privacy</h2>
-    <p>Zpend is not directed at children under 13. We do not knowingly collect information from children. If you believe a child has submitted personal information, contact us and we will delete it.</p>
+    <h2>3. No account required</h2>
+    <p>Zpend requires no sign-up, no login, and no account of any kind. You open the app and start tracking immediately. We have no way to identify who you are, and we have no interest in doing so.</p>
 
-    <h2>6. Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time. When we do, we update the "Last updated" date above. Continued use of the App after changes means you accept the updated policy.</p>
+    <h2>4. Voice input</h2>
+    <p>When you use voice logging, your speech is processed entirely by Apple's on-device Speech framework. Audio is processed locally on your iPhone and is never sent to Zpend or any third-party server.</p>
 
-    <h2>7. Contact</h2>
-    <p>Questions? Reach us at <a href="mailto:support@zpend.app">support@zpend.app</a></p>
+    <h2>5. Third-party services</h2>
+    <p>Zpend contains no third-party analytics SDKs, advertising libraries, or tracking tools. The only external framework used is Apple's native Speech framework for on-device voice recognition, which operates entirely on your device.</p>
+
+    <h2>6. Deleting your data</h2>
+    <p>To delete all your data, simply delete the Zpend app from your iPhone. iOS will permanently remove all locally stored data. If you enabled iCloud Backup, you can remove the Zpend data from your iCloud storage via iPhone Settings → your name → iCloud → Manage Storage.</p>
+
+    <h2>7. Children's privacy</h2>
+    <p>Zpend does not collect data from anyone, including children under 13. There is no data collection mechanism in the app at all.</p>
+
+    <h2>8. Changes to this policy</h2>
+    <p>If we ever change this policy, we will update the date at the top of this page. Our commitment to collecting no data will not change.</p>
+
+    <h2>9. Contact</h2>
+    <p>Questions? Email us at <a href="mailto:support@zpend.app">support@zpend.app</a></p>
   </div>
 
   <footer>
     <div class="footer-inner">
       <a class="footer-logo" href="/">
-        <img src="/logo.png" alt="Zpend" />
+        <img src="/logo.svg" alt="Zpend" />
         <span>Zpend</span>
       </a>
       <div class="footer-links">
