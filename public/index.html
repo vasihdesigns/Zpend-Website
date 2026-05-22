@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zpend — Your Money, Under Control</title>
+  <meta name="description" content="Track expenses by voice or text. Smart categories, budgets, recurring bills, and insights. All in one place." />
+  <meta property="og:title" content="Zpend — Your Money, Under Control" />
+  <meta property="og:description" content="Just say '$12 for lunch' and it's logged. No typing needed." />
+  <meta property="og:image" content="https://zpend.app/og-image.png" />
+  <link rel="icon" href="/logo.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #3B83F5;
+      --blue-dark: #2563EB;
+      --blue-light: #EFF6FF;
+      --gray-50: #F9FAFB;
+      --gray-100: #F3F4F6;
+      --gray-300: #D1D5DB;
+      --gray-500: #6B7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --white: #FFFFFF;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      color: var(--gray-900);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 100%;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--gray-900);
+    }
+
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+
+    .nav-logo span {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-cta {
+      background: var(--gray-900);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--gray-700); }
+
+    /* HERO */
+    .hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--blue-light);
+      color: var(--blue-dark);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    .hero-badge span { font-size: 15px; }
+
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      color: var(--gray-900);
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+
+    .hero p {
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--gray-500);
+      max-width: 480px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    /* WAITLIST FORM */
+    .waitlist-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .waitlist-form input {
+      flex: 1;
+      min-width: 220px;
+      padding: 14px 18px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 100px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    .waitlist-form input:focus {
+      border-color: var(--blue);
+    }
+
+    .waitlist-form button {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .waitlist-form button:hover { background: var(--blue-dark); }
+    .waitlist-form button:active { transform: scale(0.98); }
+
+    .waitlist-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--gray-500);
+    }
+
+    .success-msg {
+      display: none;
+      color: var(--blue-dark);
+      font-weight: 600;
+      font-size: 15px;
+      margin-top: 16px;
+    }
+
+    /* FEATURES */
+    .features {
+      background: var(--gray-50);
+      padding: 100px 24px;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 64px;
+      color: var(--gray-900);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      border: 1.5px solid var(--gray-100);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+      color: var(--gray-900);
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    /* HOW IT WORKS */
+    .how {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 100px 24px;
+      text-align: center;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-top: 56px;
+      text-align: left;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      margin-top: 2px;
+    }
+
+    .step-content h4 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--gray-900);
+    }
+
+    .step-content p {
+      font-size: 14px;
+      color: var(--gray-500);
+    }
+
+    /* CTA BOTTOM */
+    .cta-bottom {
+      background: var(--gray-900);
+      color: var(--white);
+      text-align: center;
+      padding: 100px 24px;
+    }
+
+    .cta-bottom h2 {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .cta-bottom p {
+      font-size: 17px;
+      color: #9CA3AF;
+      margin-bottom: 40px;
+    }
+
+    .cta-bottom .waitlist-form input {
+      background: #1F2937;
+      border-color: #374151;
+      color: var(--white);
+    }
+
+    .cta-bottom .waitlist-form input::placeholder { color: #6B7280; }
+    .cta-bottom .waitlist-form input:focus { border-color: var(--blue); }
+    .cta-bottom .waitlist-note { color: #6B7280; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--gray-100);
+      padding: 32px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1000px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--gray-900);
+      text-decoration: none;
+    }
+
+    footer .footer-logo img { width: 24px; height: 24px; border-radius: 6px; }
+
+    footer nav a {
+      font-size: 14px;
+      color: var(--gray-500);
+      text-decoration: none;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+
+    footer nav a:hover { color: var(--gray-900); }
+
+    footer .copyright {
+      font-size: 13px;
+      color: var(--gray-500);
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 72px 20px 60px; }
+      .features, .how, .cta-bottom { padding: 72px 20px; }
+      footer { flex-direction: column; align-items: flex-start; }
+      footer nav a:first-child { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="/">
+      <img src="/logo.png" alt="Zpend logo" />
+      <span>Zpend</span>
+    </a>
+    <a class="nav-cta" href="#waitlist">
+      Get Early Access
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span>📱</span> Coming to iOS — Join the Waitlist
+    </div>
+    <h1>Your Money,<br /><em>Under Control</em></h1>
+    <p>Just say "$12 for lunch" and it's logged. Track expenses by voice or text — no spreadsheets, no hassle.</p>
+
+    <div id="waitlist">
+      <form class="waitlist-form" onsubmit="handleSubmit(event)">
+        <input type="email" placeholder="your@email.com" required autocomplete="email" />
+        <button type="submit">Notify Me</button>
+      </form>
+      <p class="waitlist-note">No spam. We'll only email when the app launches.</p>
+      <p class="success-msg" id="success">✓ You're on the list! We'll be in touch.</p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">Everything you need,<br />nothing you don't</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🎙️</span>
+        <h3>Voice Logging</h3>
+        <p>Say "$12 for lunch" and it's instantly logged. No tapping through menus, no friction.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🏷️</span>
+        <h3>Smart Categories</h3>
+        <p>14 categories ready to go. Add your own custom ones if you need more control.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💰</span>
+        <h3>Budget Limits</h3>
+        <p>Set spending limits per category. Get a clear view before you overspend.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔄</span>
+        <h3>Recurring Bills</h3>
+        <p>Auto-log subscriptions and bills so they never slip through the cracks.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <h3>Monthly Insights</h3>
+        <p>See exactly where your money went, month by month. Charts, trends, no surprises.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">👥</span>
+        <h3>Groups</h3>
+        <p>Organize expenses by context — work, travel, personal — and keep things tidy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Log an expense<br />in seconds</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Open the app</h4>
+          <p>Zpend is always one tap away. No login screen, no loading — it's instant.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Say or type your expense</h4>
+          <p>Tap the mic and say "$12 for lunch" or just type it. Zpend figures out the category for you.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>See the big picture</h4>
+          <p>Check your monthly summary, budget progress, and trends anytime — all in one clean dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BOTTOM -->
+  <section class="cta-bottom">
+    <h2>Know where your<br />money goes</h2>
+    <p>Join the waitlist — be first when Zpend launches.</p>
+    <form class="waitlist-form" style="justify-content:center" onsubmit="handleSubmit(event)">
+      <input type="email" placeholder="your@email.com" required autocomplete="email" />
+      <button type="submit">Join Waitlist</button>
+    </form>
+    <p class="waitlist-note">Free to download. Available on iPhone.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-logo" href="/">
+      <img src="/logo.png" alt="Zpend" />
+      Zpend
+    </a>
+    <nav>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Use</a>
+      <a href="mailto:support@zpend.app">Contact</a>
+    </nav>
+    <p class="copyright">© 2026 Zpend. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const email = form.querySelector('input[type="email"]').value;
+      // Simple mailto fallback — replace with a form service like Formspree later
+      const successEl = document.getElementById('success');
+      form.style.display = 'none';
+      if (successEl) successEl.style.display = 'block';
+      // Store email locally for now
+      const emails = JSON.parse(localStorage.getItem('waitlist') || '[]');
+      emails.push({ email, date: new Date().toISOString() });
+      localStorage.setItem('waitlist', JSON.stringify(emails));
+    }
+  </script>
+
+</body>
+</html>
