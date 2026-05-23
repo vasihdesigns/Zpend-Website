@@ -127,9 +127,9 @@
     }
     .iphone img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
     .iphone-notch {
-      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 96px; height: 28px; background: #1A1A1C;
-      border-radius: 0 0 18px 18px; z-index: 10;
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 26px; background: #1A1A1C;
+      border-radius: 20px; z-index: 10;
     }
     /* sizes */
     .ph-feat  { width: 270px; height: 553px; }
@@ -374,7 +374,7 @@
     /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
     .reveal.visible { opacity: 1; transform: none; }
-    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
@@ -731,9 +731,9 @@
       <div class="slide-wrap reveal">
         <div class="iphone ph-feat">
           <div class="iphone-notch"></div>
-          <img src="/onboard-1.png" alt="Your money under control" />
+          <img src="/onboard-1.png" alt="Track your expense smartly" />
         </div>
-        <span class="slide-caption">Your Money, Under Control</span>
+        <span class="slide-caption">Track Expenses Smartly</span>
       </div>
       <div class="slide-wrap reveal d1">
         <div class="iphone ph-feat">
@@ -745,16 +745,16 @@
       <div class="slide-wrap reveal d2">
         <div class="iphone ph-feat">
           <div class="iphone-notch"></div>
-          <img src="/onboard-4.png" alt="Everything in one place" />
+          <img src="/onboard-3.png" alt="Smart categories" />
         </div>
-        <span class="slide-caption">Everything In One Place</span>
+        <span class="slide-caption">Smart Categories</span>
       </div>
       <div class="slide-wrap reveal d3">
         <div class="iphone ph-feat">
           <div class="iphone-notch"></div>
-          <img src="/onboard-5.png" alt="Know where your money goes" />
+          <img src="/onboard-4.png" alt="Everything in one place" />
         </div>
-        <span class="slide-caption">Know Where It Goes</span>
+        <span class="slide-caption">Everything In One Place</span>
       </div>
     </div>
   </section>
